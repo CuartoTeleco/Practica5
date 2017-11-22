@@ -20,15 +20,24 @@ class VisitasTableViewController: UITableViewController {
     
     var imgCache = [String:UIImage]()
     
+    var bDate: String!
+    
+    var aDate: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        print(bDate)
+        print(aDate)
         downloadVisits()
     }
     
     private func downloadVisits() {
         
+<<<<<<< HEAD
         let strurl = "https://dcrmt.herokuapp.com/api/visits/flattened?token=\(token)&dateafter=2017-10-01&datebefore=2017-11-07"
+=======
+        let strurl = "https://dcrmt.herokuapp.com/api/visits/flattened?token=\(token)&datebefore=\(bDate)&dateafter=\(aDate)"
+>>>>>>> 074510c8d026abffa1dd08f30bb21ec5dced1a50
         
         if let url = URL(string: strurl) {
             
