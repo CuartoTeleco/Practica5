@@ -28,7 +28,7 @@ class VisitasTableViewController: UITableViewController {
     
     private func downloadVisits() {
         
-        let strurl = "https://dcrmt.herokuapp.com/api/visits/flattened?token=\(token)"
+        let strurl = "https://dcrmt.herokuapp.com/api/visits/flattened?token=\(token)&dateafter=2017-10-01&datebefore=2017-11-07"
         
         if let url = URL(string: strurl) {
             
