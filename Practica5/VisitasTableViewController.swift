@@ -12,32 +12,51 @@ typealias Visita = [String:Any]
 
 class VisitasTableViewController: UITableViewController {
 
-    let token = "ea014460d8c1df1805b7"
-    
     var visitas = [Visita]()
     
     var session = URLSession.shared
     
     var imgCache = [String:UIImage]()
     
-    var bDate: String!
+    var urlMio: String?
     
-    var aDate: String!
+    var urlFav: String?
+    
+    var urlTodas: String?
+    
+    var strurl: String = ""
+    
+    var titulo: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(bDate)
-        print(aDate)
+        print(titulo!)
+        title = titulo
         downloadVisits()
     }
     
     private func downloadVisits() {
         
-<<<<<<< HEAD
-        let strurl = "https://dcrmt.herokuapp.com/api/visits/flattened?token=\(token)&dateafter=2017-10-01&datebefore=2017-11-07"
-=======
-        let strurl = "https://dcrmt.herokuapp.com/api/visits/flattened?token=\(token)&datebefore=\(bDate)&dateafter=\(aDate)"
->>>>>>> 074510c8d026abffa1dd08f30bb21ec5dced1a50
+//<<<<<<< HEAD
+//        let strurl = "https://dcrmt.herokuapp.com/api/visits/flattened?token=\(token)&dateafter=2017-10-01&datebefore=2017-11-07"
+//=======
+        //var strurl = "https://dcrmt.herokuapp.com/api/visits/flattened?token=\(token)&datebefore=\(bDate!)&dateafter=\(aDate!)"
+//>>>>>>> 074510c8d026abffa1dd08f30bb21ec5dced1a50
+        
+        switch titulo! {
+        case "Todas las visitas":
+            strurl = urlTodas!
+            break
+        case "Visitas favoritas":
+            strurl = urlFav!
+            break
+        case "Mis visitas":
+            strurl = urlMio!
+            break
+        default:
+            strurl = urlTodas!
+        }
+        print(strurl)
         
         if let url = URL(string: strurl) {
             
@@ -84,17 +103,24 @@ class VisitasTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Visit Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Visit Cell", for: indexPath) as! VisitTableViewCell
 
         let visit = visitas[indexPath.row]
         
-        cell.textLabel?.text = ""
-        cell.detailTextLabel?.text = ""
-        cell.imageView?.image = UIImage(named: "noface")
+        cell.nameLabel.text = ""
+        cell.salesmanLabel.text = ""
+        cell.plannedForLabel.text = ""
+        cell.accomplishedLabel.text = "La visita no se ha realizado"
+        
+        cell.imagen.image = UIImage(named: "noface")
         
         //Nombre del customer
         if let customer = visit["Customer"] as? [String:Any], let name = customer["name"] as? String {
-            cell.textLabel?.text = name
+            cell.nameLabel.text = name
+        }
+        
+        if let salesman = visit["Salesman"] as? [String:Any],let sName = salesman["fullname"] as? String {
+            cell.salesmanLabel.text = "Vendedor: "+sName
         }
         
         //Fecha de la visita con el formateador
@@ -103,14 +129,24 @@ class VisitasTableViewController: UITableViewController {
             df.formatOptions = [.withFullDate, .withTime, .withDashSeparatorInDate, .withColonSeparatorInTime]
             if let d = df.date(from: plannedFor) {
                 let str3 = ISO8601DateFormatter.string(from: d, timeZone: .current, formatOptions: [.withFullDate])
-                cell.detailTextLabel?.text = str3
+                cell.plannedForLabel.text = str3
+            }
+        }
+        
+        if let accomplishedBy = visit["fulfilledAt"] as? String {
+            let df = ISO8601DateFormatter()
+            df.formatOptions = [.withFullDate, .withTime, .withDashSeparatorInDate, .withColonSeparatorInTime]
+            df.formatOptions = [.withFullDate, .withTime, .withDashSeparatorInDate, .withColonSeparatorInTime]
+            if let d = df.date(from: accomplishedBy) {
+                let date = ISO8601DateFormatter.string(from: d, timeZone: .current, formatOptions: [.withFullDate])
+                cell.accomplishedLabel.text = date
             }
         }
         
         if let salesman = visit["Salesman"] as? [String:Any], let photo = salesman["Photo"] as? [String:Any], let strurl = photo["url"] as? String {
             
             if let img = imgCache[strurl] {
-                cell.imageView?.image = img
+                cell.imagen.image = img
             } else {
                 updatePhoto(strurl, for: indexPath)
             }
@@ -170,14 +206,20 @@ class VisitasTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "showVisit" {
+            if let vvc = segue.destination as? VisitViewController {
+                if let indexPath = tableView.indexPathForSelectedRow {
+                    vvc.visita = visitas[indexPath.row]
+                    vvc.image = imgCache
+                }
+            }
+        }
     }
-    */
+    
 
 }

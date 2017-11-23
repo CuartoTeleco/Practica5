@@ -15,6 +15,8 @@ class MainViewController: UIViewController {
     
     var dateBefore: Date = Date(timeIntervalSinceNow: 0)
     var dateAfter: Date = Date(timeIntervalSinceNow: 0)
+
+    let token = "ea014460d8c1df1805b7"
     
     var def: UserDefaults = UserDefaults.standard
     
@@ -39,8 +41,8 @@ class MainViewController: UIViewController {
         } else {
             def.set(dateAfter, forKey: "dateAfter")
         }
-        desdeLabel.text = "Desde: "+dateFormatter.string(from: dateBefore)
-        hastaLabel.text = "Hasta: "+dateFormatter.string(from: dateAfter)
+        hastaLabel.text = "Hasta: "+dateFormatter.string(from: dateBefore)
+        desdeLabel.text = "Desde: "+dateFormatter.string(from: dateAfter)
 
         // Do any additional setup after loading the view.
     }
@@ -61,7 +63,7 @@ class MainViewController: UIViewController {
                 bdvc.beforeDate = dateBefore
                 bdvc.completionHandlerBeforeDate = {(bDate: Date) in
                     self.dateBefore = bDate
-                    self.desdeLabel.text = "Desde: "+self.dateFormatter.string(from: bDate)
+                    self.hastaLabel.text = "Hasta: "+self.dateFormatter.string(from: bDate)
                     self.def.set(bDate, forKey: "dateBefore")
                     print(ISO8601DateFormatter.string(from: bDate, timeZone: .current, formatOptions: [.withFullDate]))
                 }
@@ -72,16 +74,46 @@ class MainViewController: UIViewController {
                 advc.afterDate = dateAfter
                 advc.completionHandlerAfterDate = {(aDate: Date) in
                     self.dateAfter = aDate
-                    self.hastaLabel.text = "Desde: "+self.dateFormatter.string(from: aDate)
+                    self.desdeLabel.text = "Desde: "+self.dateFormatter.string(from: aDate)
                     self.def.set(aDate, forKey: "dateAfter")
                     print(ISO8601DateFormatter.string(from: aDate, timeZone: .current, formatOptions: [.withFullDate]))
                 }
             }
         }
         else if segue.identifier == "showVisits" {
-            if let vtvc = segue.destination as? VisitasTableViewController {
-                vtvc.bDate = ISO8601DateFormatter.string(from: dateBefore, timeZone: .current, formatOptions: [.withFullDate])
-                vtvc.aDate  = ISO8601DateFormatter.string(from: dateAfter, timeZone: .current, formatOptions: [.withFullDate])
+            let bDate = ISO8601DateFormatter.string(from: dateBefore, timeZone: .current, formatOptions: [.withFullDate])
+            let aDate = ISO8601DateFormatter.string(from: dateAfter, timeZone: .current, formatOptions: [.withFullDate])
+            if (aDate > bDate) {
+                showAlert()
+            } else {
+                if let vtvc = segue.destination as? VisitasTableViewController {
+                    vtvc.urlTodas = "https://dcrmt.herokuapp.com/api/visits/flattened?token=\(token)&datebefore=\(bDate)&dateafter=\(aDate)"
+                    vtvc.titulo = "Todas las visitas"
+                }
+            }
+        }
+        else if segue.identifier == "showMine" {
+            let bDate = ISO8601DateFormatter.string(from: dateBefore, timeZone: .current, formatOptions: [.withFullDate])
+            let aDate = ISO8601DateFormatter.string(from: dateAfter, timeZone: .current, formatOptions: [.withFullDate])
+            if (aDate > bDate) {
+                showAlert()
+            } else {
+                if let vtvc = segue.destination as? VisitasTableViewController {
+                    vtvc.urlMio = "https://dcrmt.herokuapp.com/api/users/tokenOwner/visits/flattened?token=\(token)&datebefore=\(bDate)&dateafter=\(aDate)"
+                    vtvc.titulo = "Mis visitas"
+                }
+            }
+        }
+        else if segue.identifier == "showFav" {
+            let bDate = ISO8601DateFormatter.string(from: dateBefore, timeZone: .current, formatOptions: [.withFullDate])
+            let aDate = ISO8601DateFormatter.string(from: dateAfter, timeZone: .current, formatOptions: [.withFullDate])
+            if (aDate > bDate) {
+                showAlert()
+            } else {
+                if let vtvc = segue.destination as? VisitasTableViewController {
+                    vtvc.urlFav = "https://dcrmt.herokuapp.com/api/users/tokenOwner/visits/flattened?token=\(token)&datebefore=\(bDate)&dateafter=\(aDate)&favorites=1"
+                    vtvc.titulo = "Visitas favoritas"
+                }
             }
         }
     }
@@ -93,6 +125,11 @@ class MainViewController: UIViewController {
     
     @IBAction func backAfter(_ segue: UIStoryboardSegue){
         
+    }
+    
+    func showAlert() {
+        let alert = UIAlertController(title: "Fechas male", message: "Intervalo de fechas erróneo", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
     }
 
 }

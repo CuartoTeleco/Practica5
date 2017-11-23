@@ -16,6 +16,8 @@
 		6F2088011FC4273D00ABE458 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6F2087FF1FC4273D00ABE458 /* LaunchScreen.storyboard */; };
 		6F2088091FC427A900ABE458 /* VisitasTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F2088081FC427A900ABE458 /* VisitasTableViewController.swift */; };
 		6F20880B1FC429B900ABE458 /* noface.png in Resources */ = {isa = PBXBuildFile; fileRef = 6F20880A1FC429B900ABE458 /* noface.png */; };
+		6FA891411FC7344A00BC4F2A /* VisitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA891401FC7344A00BC4F2A /* VisitTableViewCell.swift */; };
+		6FA891431FC7456500BC4F2A /* VisitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FA891421FC7456500BC4F2A /* VisitViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		6F2088021FC4273D00ABE458 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6F2088081FC427A900ABE458 /* VisitasTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisitasTableViewController.swift; sourceTree = "<group>"; };
 		6F20880A1FC429B900ABE458 /* noface.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noface.png; sourceTree = "<group>"; };
+		6FA891401FC7344A00BC4F2A /* VisitTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisitTableViewCell.swift; sourceTree = "<group>"; };
+		6FA891421FC7456500BC4F2A /* VisitViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VisitViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +76,8 @@
 				2ECB00A81FC5645100684E81 /* MainViewController.swift */,
 				2ECB00AA1FC5648200684E81 /* DateBeforeViewController.swift */,
 				2ECB00AC1FC564B700684E81 /* DateAfterViewController.swift */,
+				6FA891401FC7344A00BC4F2A /* VisitTableViewCell.swift */,
+				6FA891421FC7456500BC4F2A /* VisitViewController.swift */,
 			);
 			path = Practica5;
 			sourceTree = "<group>";
@@ -150,8 +156,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				2ECB00A91FC5645100684E81 /* MainViewController.swift in Sources */,
+				6FA891431FC7456500BC4F2A /* VisitViewController.swift in Sources */,
 				2ECB00AB1FC5648200684E81 /* DateBeforeViewController.swift in Sources */,
 				2ECB00AD1FC564B700684E81 /* DateAfterViewController.swift in Sources */,
+				6FA891411FC7344A00BC4F2A /* VisitTableViewCell.swift in Sources */,
 				6F2088091FC427A900ABE458 /* VisitasTableViewController.swift in Sources */,
 				6F2087F71FC4273D00ABE458 /* AppDelegate.swift in Sources */,
 			);
