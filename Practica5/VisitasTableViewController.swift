@@ -30,7 +30,6 @@ class VisitasTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(titulo!)
         title = titulo
         downloadVisits()
     }
@@ -56,7 +55,6 @@ class VisitasTableViewController: UITableViewController {
         default:
             strurl = urlTodas!
         }
-        print(strurl)
         
         if let url = URL(string: strurl) {
             

@@ -57,7 +57,6 @@ class VisitViewController: UIViewController {
         if let salesman = visita["Salesman"] as? [String:Any], let sName = salesman["fullname"] as? String, let photo = salesman["Photo"] as? [String:Any], let photoUrl = photo["url"] as? String {
             salesmanName.text = sName
             if let img = image[photoUrl] {
-                print("Foto")
                 profileImage.image = img
             } else {
                 updatePhoto(photoUrl)
