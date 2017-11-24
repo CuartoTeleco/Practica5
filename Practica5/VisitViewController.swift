@@ -43,8 +43,8 @@ class VisitViewController: UIViewController {
         profileImage.image = UIImage(named: "noface")
         customerName.text = "No especificado"
         salesmanName.text = "No especificado"
-        plannedForLabel.text = "No especificado"
-        accomplishedByLabel.text = "No especificado"
+        plannedForLabel.text = "No planificada"
+        accomplishedByLabel.text = "No realizada"
         notesLabel.text = "No especificado"
         addressLabel.text = "No especificado"
         cityLabel.text = "No especificado"
@@ -65,11 +65,34 @@ class VisitViewController: UIViewController {
         }
         if let customer = visita["Customer"] as? [String:Any], let cName = customer["name"] as? String, let address = customer["address1"] as? String, let city = customer["city"] as? String, let phone = customer["phone1"] as? String, let email = customer["email1"] as? String, let web = customer["web"] as? String {
             customerName.text = cName
-            addressLabel.text = address
-            cityLabel.text = city
-            phoneLabel.text = phone
-            emailLabel.text = email
-            webLabel.text = web
+            if address == "" {
+                addressLabel.text = "No especificado"
+            } else {
+                addressLabel.text = address
+            }
+            if city == "" {
+                cityLabel.text = "No especificado"
+            } else {
+                
+                cityLabel.text = city
+            }
+            if phone == "" {
+                phoneLabel.text = "No especificado"
+            } else {
+                
+                phoneLabel.text = phone
+            }
+            if email == "" {
+                emailLabel.text = "No especificado"
+            } else {
+                
+                emailLabel.text = email
+            }
+            if web == "" {
+                webLabel.text = "No especificado"
+            } else {
+                webLabel.text = web
+            }
         }
         if let plannedFor = visita["plannedFor"] as? String {
             let df = ISO8601DateFormatter()
@@ -88,7 +111,11 @@ class VisitViewController: UIViewController {
             }
         }
         if let notes = visita["notes"] as? String {
-            notesLabel.text = notes
+            if notes == "" {
+                notesLabel.text = "No especificado"
+            } else {
+                notesLabel.text = notes
+            }
         }
         
     }
